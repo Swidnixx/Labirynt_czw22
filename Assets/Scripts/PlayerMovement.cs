@@ -21,13 +21,21 @@ public class PlayerMovement : MonoBehaviour
         GroundCheck();
     }
 
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.collider.CompareTag("Pickup"))
+        {
+            hit.gameObject.GetComponent<Pickup>().Pick();
+        }
+    }
+
     void GroundCheck()
     {
         RaycastHit hit;
         bool didHit = Physics.Raycast( groundSensor.position, Vector3.down, out hit, 0.5f, groundLayer);
         if (didHit)
         {
-            Debug.Log(hit.collider);
+            //Debug.Log(hit.collider);
 
             string tag = hit.collider.tag;
 
@@ -47,7 +55,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
     void Steering()
     {
         float inputX = Input.GetAxis("Horizontal");
