@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
     void TimerTick()
     {
         time--;
-        Debug.Log("Time: " + time);
+        //Debug.Log("Time: " + time);
 
         if(time <= 0)
         {

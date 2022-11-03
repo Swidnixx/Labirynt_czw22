@@ -15,10 +15,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     LayerMask groundLayer;
 
+    float velocityY;
     private void Update()
     {
         Steering();
-        GroundCheck();
+        bool grounded = GroundCheck();
+
+        Gravity(grounded);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -29,7 +32,24 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void GroundCheck()
+    void Gravity(bool grounded)
+    {
+        if (grounded)
+        {
+            velocityY = 0;
+        }
+        else
+        {
+            if (velocityY > -55)
+            {
+                velocityY -= 10 * Time.deltaTime;
+            }
+
+            controller.Move(new Vector3(0, velocityY, 0) * Time.deltaTime);
+        }
+    }
+
+    bool GroundCheck()
     {
         RaycastHit hit;
         bool didHit = Physics.Raycast( groundSensor.position, Vector3.down, out hit, 0.5f, groundLayer);
@@ -54,6 +74,8 @@ public class PlayerMovement : MonoBehaviour
                     break;
             }
         }
+
+        return didHit;
     }
     void Steering()
     {
