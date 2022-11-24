@@ -9,9 +9,9 @@ public class GameManager : MonoBehaviour
     bool paused;
 
     int diamonds = 0;
-    int goldKeys = 0;
-    int greenKeys = 0;
-    int redKeys = 0;
+    public int goldKeys = 0;
+    public int greenKeys = 0;
+    public int redKeys = 0;
 
     private void Awake()
     {
