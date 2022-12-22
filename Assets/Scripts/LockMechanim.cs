@@ -18,17 +18,36 @@ public class LockMechanim : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") && !alreadyOpen)
         {
             playerInRange = true;
+            GameManager.SingleInstance.infoText.text = "Press E to use a Key";
+
+            Color color = Color.white;
+            switch(keyColor)
+            {
+                case KeyColor.Gold:
+                    color = Color.yellow;
+                    break;
+
+                case KeyColor.Green:
+                    color = Color.green;
+                    break;
+
+                case KeyColor.Red:
+                    color = Color.red;
+                    break;
+            }
+            GameManager.SingleInstance.infoText.color = color;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !alreadyOpen)
         {
             playerInRange = false;
+            GameManager.SingleInstance.infoText.text = "";
         }
     }
 
@@ -42,10 +61,11 @@ public class LockMechanim : MonoBehaviour
                 {
                     alreadyOpen = true;
                     animator.SetTrigger("open");
+                    GameManager.SingleInstance.infoText.text = "";
                 }
                 else
                 {
-                    Debug.Log("Brak pasuj¹cego klucza");
+                    GameManager.SingleInstance.infoText.text = "You need a proper key";
                 }
             } 
         }
